@@ -1,12 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import mascot from "@/assets/mascot.png";
 import meme1 from "@/assets/meme-1.jpg";
 import meme2 from "@/assets/meme-2.jpg";
 import meme3 from "@/assets/meme-3.jpg";
+import { CONTRACT_ADDRESS, getTokenStats, type TokenStats } from "@/lib/token.functions";
 
-const CA = "FPKEgcHacDeKmreMHYAEQN5cdSwwgp3fLdnnTgfGpump";
+const CA = CONTRACT_ADDRESS;
 const PUMPFUN = `https://pump.fun/coin/${CA}`;
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
