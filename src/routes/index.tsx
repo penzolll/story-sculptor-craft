@@ -5,7 +5,7 @@ import meme1 from "@/assets/meme-1.jpg";
 import meme2 from "@/assets/meme-2.jpg";
 import meme3 from "@/assets/meme-3.jpg";
 
-const CA = "KoPiCat11111111111111111111111111111111111";
+const CA = "FPKEgcHacDeKmreMHYAEQN5cdSwwgp3fLdnnTgfGpump";
 const PUMPFUN = `https://pump.fun/coin/${CA}`;
 
 export const Route = createFileRoute("/")({
