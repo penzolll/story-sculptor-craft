@@ -12,4 +12,9 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Override default Cloudflare target -> Node.js server, karena Railway
+  // menjalankan proses Node biasa (bukan Cloudflare Workers).
+  nitro: {
+    preset: "node-server",
+  },
 });
