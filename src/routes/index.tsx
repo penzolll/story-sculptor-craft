@@ -6,21 +6,21 @@ import meme2 from "@/assets/meme-2.jpg";
 import meme3 from "@/assets/meme-3.jpg";
 
 const CA = "KoPiCat11111111111111111111111111111111111";
-const DEX = "https://jup.ag/swap/SOL-" + CA;
+const PUMPFUN = `https://pump.fun/coin/${CA}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "$KOPI — Meme Coin Kucing Ngopi di Solana" },
+      { title: "$KOPI — The Coffee Cat Meme Coin on Solana" },
       {
         name: "description",
         content:
-          "$KOPI adalah meme coin kucing paling kafein di Solana. Lihat lore, tokenomics, cara beli, roadmap, dan contract address resmi.",
+          "$KOPI is the most caffeinated cat on Solana. Read the lore, tokenomics, how to buy on pump.fun, roadmap, and verify the official contract address.",
       },
-      { property: "og:title", content: "$KOPI — Meme Coin Kucing Ngopi di Solana" },
+      { property: "og:title", content: "$KOPI — The Coffee Cat Meme Coin on Solana" },
       {
         property: "og:description",
-        content: "Lore, tokenomics, how to buy, dan meme gallery $KOPI. Ngopi dulu, baru ke bulan.",
+        content: "Lore, tokenomics, how to buy, and meme gallery for $KOPI. Coffee first, moon second.",
       },
     ],
   }),
@@ -39,7 +39,7 @@ const alloc = [
   { label: "Liquidity Pool (burned)", value: 60, color: "oklch(0.78 0.19 62)" },
   { label: "Community & Airdrop", value: 20, color: "oklch(0.72 0.16 145)" },
   { label: "Marketing / CEX", value: 12, color: "oklch(0.68 0.15 25)" },
-  { label: "Dev (vested 6 bln)", value: 8, color: "oklch(0.6 0.05 60)" },
+  { label: "Dev (6-month vest)", value: 8, color: "oklch(0.6 0.05 60)" },
 ];
 
 function Pie() {
@@ -57,7 +57,7 @@ function Pie() {
       className="mx-auto aspect-square w-56 rounded-full border-2 border-border sm:w-72"
       style={{ backgroundImage: `conic-gradient(${stops})` }}
       role="img"
-      aria-label="Alokasi token KOPI"
+      aria-label="KOPI token allocation chart"
     >
       <div className="flex h-full w-full items-center justify-center">
         <div className="flex h-1/2 w-1/2 flex-col items-center justify-center rounded-full bg-background text-center">
@@ -83,7 +83,7 @@ function Index() {
       <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
           <a href="#top" className="flex items-center gap-2 font-display text-lg">
-            <img src={mascot} alt="Maskot kucing $KOPI" width={40} height={40} className="h-9 w-9" />
+            <img src={mascot} alt="$KOPI cat mascot" width={40} height={40} className="h-9 w-9" />
             $KOPI
           </a>
           <nav className="hidden gap-6 text-sm md:flex">
@@ -94,7 +94,7 @@ function Index() {
             ))}
           </nav>
           <a
-            href={DEX}
+            href={PUMPFUN}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full bg-primary px-5 py-2 font-display text-sm text-primary-foreground transition-transform hover:scale-105"
@@ -110,31 +110,31 @@ function Index() {
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-24">
             <div>
               <span className="inline-block rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground">
-                Built on Solana · Fair launch
+                Launched on pump.fun · Solana · Fair launch
               </span>
               <h1 className="mt-5 text-5xl leading-tight sm:text-6xl">
                 $KOPI
-                <span className="block text-primary">Kucing Ngopi</span>
+                <span className="block text-primary">The Coffee Cat</span>
               </h1>
               <p className="mt-4 max-w-md text-lg text-muted-foreground">
-                Kucing paling kafein di blockchain. Tidur 20 jam, pump 4 jam. Ngopi dulu, baru ke bulan.
+                The most caffeinated cat on Solana. Sleeps 20 hours, pumps for 4. Coffee first, moon second.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <a
-                  href={DEX}
+                  href={PUMPFUN}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="glow rounded-full bg-primary px-7 py-3 font-display text-primary-foreground transition-transform hover:scale-105"
                 >
-                  Buy on Jupiter
+                  Buy on pump.fun
                 </a>
                 <a
-                  href={`https://raydium.io/swap/?outputMint=${CA}`}
+                  href={`https://dexscreener.com/solana/${CA}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-full border-2 border-border px-7 py-3 font-display transition-colors hover:border-primary hover:text-primary"
                 >
-                  Raydium
+                  View Chart
                 </a>
               </div>
 
@@ -150,14 +150,14 @@ function Index() {
                   </button>
                 </div>
                 <div className="mt-3 flex gap-4 text-xs text-muted-foreground">
+                  <a className="hover:text-primary" href={PUMPFUN} target="_blank" rel="noopener noreferrer">
+                    pump.fun ↗
+                  </a>
                   <a className="hover:text-primary" href={`https://solscan.io/token/${CA}`} target="_blank" rel="noopener noreferrer">
                     Solscan ↗
                   </a>
                   <a className="hover:text-primary" href={`https://birdeye.so/token/${CA}`} target="_blank" rel="noopener noreferrer">
                     Birdeye ↗
-                  </a>
-                  <a className="hover:text-primary" href={`https://dexscreener.com/solana/${CA}`} target="_blank" rel="noopener noreferrer">
-                    DexScreener ↗
                   </a>
                 </div>
               </div>
@@ -165,7 +165,7 @@ function Index() {
 
             <img
               src={mascot}
-              alt="Maskot $KOPI: kucing oranye berkacamata hitam memegang secangkir kopi"
+              alt="$KOPI mascot: an orange cat wearing sunglasses holding a cup of coffee"
               width={1024}
               height={1024}
               className="wiggle mx-auto w-64 drop-shadow-2xl sm:w-80 md:w-full md:max-w-md"
@@ -179,23 +179,23 @@ function Index() {
             <h2 className="text-3xl sm:text-4xl">Lore</h2>
             <div className="mt-6 space-y-4 text-lg text-muted-foreground">
               <p>
-                Tahun 2021, seekor kucing oranye bernama Kopi tidur di atas laptop trader yang sedang
-                buka chart. Tanpa sengaja pantatnya menekan tombol buy. Trader itu jadi kaya.
+                Back in 2021, an orange cat named Kopi fell asleep on a trader's laptop while the charts
+                were open. His butt accidentally hit the buy button. That trader got rich.
               </p>
               <p>
-                Sejak hari itu, Kopi dipercaya punya insting market yang lebih tajam daripada 400 indikator.
-                Dia cuma minta satu hal sebagai bayaran: kopi, tiap pagi, tanpa gula.
+                Ever since, Kopi has been believed to have sharper market instincts than 400 indicators
+                combined. He only asks for one thing in return: coffee, every morning, no sugar.
               </p>
               <p className="text-foreground">
-                $KOPI lahir untuk membiayai kebiasaan ngopi kucing ini — dan komunitas yang percaya bahwa
-                keputusan finansial terbaik dibuat setelah cangkir pertama.
+                $KOPI exists to fund this cat's caffeine habit — and the community that believes the best
+                financial decisions happen after the first cup.
               </p>
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[
-                ["Fair launch", "Tanpa presale, tanpa VC, tanpa insider."],
-                ["LP burned", "Likuiditas dikunci selamanya."],
-                ["Contract renounced", "Nggak ada yang bisa ngutak-ngatik."],
+                ["Fair launch", "No presale, no VCs, no insiders. Bonded on pump.fun."],
+                ["LP burned", "Liquidity locked forever after bonding."],
+                ["Contract renounced", "Nobody can touch the supply."],
               ].map(([t, d]) => (
                 <div key={t} className="pop-card p-5">
                   <h3 className="text-base text-primary">{t}</h3>
@@ -242,13 +242,13 @@ function Index() {
         <section id="how-to-buy" className="border-b border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
             <h2 className="text-3xl sm:text-4xl">How to Buy</h2>
-            <p className="mt-3 text-muted-foreground">Baru pertama kali? Empat langkah, lima menit.</p>
+            <p className="mt-3 text-muted-foreground">First time? Four steps, five minutes.</p>
             <ol className="mt-8 grid gap-5 md:grid-cols-4">
               {[
-                ["Install Phantom", "Download wallet Phantom di HP atau extension browser, simpan seed phrase offline."],
-                ["Beli SOL", "Beli SOL di exchange (Indodax, Binance, dll) lalu kirim ke alamat Phantom kamu."],
-                ["Buka Jupiter", "Connect wallet di jup.ag, paste contract address $KOPI di kolom output."],
-                ["Swap ke $KOPI", "Set slippage 3-5%, konfirmasi swap. Selamat, kamu resmi jadi kucing."],
+                ["Install Phantom", "Download the Phantom wallet app or browser extension and store your seed phrase offline."],
+                ["Get some SOL", "Buy SOL on any exchange and send it to your Phantom wallet address."],
+                ["Open pump.fun", "Connect your wallet on pump.fun and open the official $KOPI coin page."],
+                ["Swap for $KOPI", "Enter your amount, set slippage to 3-5%, and confirm. Welcome to the litter."],
               ].map(([t, d], i) => (
                 <li key={t} className="pop-card p-6">
                   <span className="font-display text-3xl text-primary">0{i + 1}</span>
@@ -257,6 +257,14 @@ function Index() {
                 </li>
               ))}
             </ol>
+            <a
+              href={PUMPFUN}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glow mt-8 inline-block rounded-full bg-primary px-7 py-3 font-display text-primary-foreground transition-transform hover:scale-105"
+            >
+              Take me to pump.fun
+            </a>
           </div>
         </section>
 
@@ -266,10 +274,10 @@ function Index() {
             <h2 className="text-3xl sm:text-4xl">Roadmap</h2>
             <div className="mt-8 space-y-5">
               {[
-                ["Phase 1 — Bangun Tidur", ["Fair launch di Raydium", "LP burn + renounce", "1.000 holder pertama"]],
-                ["Phase 2 — Nyeruput", ["Trending DexScreener", "CoinGecko & CMC listing", "Meme contest mingguan"]],
-                ["Phase 3 — Melek Total", ["Marketing push KOL", "10.000 holder", "Merch & sticker pack"]],
-                ["Phase 4 — To The Moon (beneran)", ["Listing CEX tier-2", "Kolaborasi komunitas kucing", "Donasi shelter kucing"]],
+                ["Phase 1 — Just Woke Up", ["Fair launch on pump.fun", "Bonding curve completed", "First 1,000 holders"]],
+                ["Phase 2 — First Sip", ["Trending on DexScreener", "CoinGecko & CMC listings", "Weekly meme contests"]],
+                ["Phase 3 — Fully Caffeinated", ["KOL marketing push", "10,000 holders", "Merch & sticker packs"]],
+                ["Phase 4 — To The Moon (for real)", ["Tier-2 CEX listing", "Cat community collabs", "Donations to cat shelters"]],
               ].map(([title, items]) => (
                 <div key={title as string} className="pop-card p-6">
                   <h3 className="text-lg text-primary">{title as string}</h3>
@@ -288,12 +296,12 @@ function Index() {
         <section id="memes" className="border-b border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
             <h2 className="text-3xl sm:text-4xl">Meme Gallery</h2>
-            <p className="mt-3 text-muted-foreground">Bikinan komunitas. Kirim punyamu di Telegram.</p>
+            <p className="mt-3 text-muted-foreground">Made by the community. Drop yours in Telegram.</p>
             <div className="mt-8 grid gap-5 sm:grid-cols-3">
               {[
-                [meme1, "Kucing $KOPI naik roket ke bulan"],
-                [meme2, "Kucing $KOPI melototin chart hijau"],
-                [meme3, "Kucing $KOPI tidur di atas cangkir kopi"],
+                [meme1, "$KOPI cat riding a rocket to the moon"],
+                [meme2, "$KOPI cat staring at a green chart"],
+                [meme3, "$KOPI cat sleeping on a coffee cup"],
               ].map(([src, alt]) => (
                 <img
                   key={alt}
@@ -314,7 +322,7 @@ function Index() {
           <div className="mx-auto max-w-4xl px-4 py-16 text-center md:py-20">
             <h2 className="text-3xl sm:text-4xl">Join the Cat Cult</h2>
             <p className="mx-auto mt-3 max-w-lg text-muted-foreground">
-              Komunitas $KOPI hidup 24/7 — sama seperti kucingnya yang selalu bangun jam 3 pagi.
+              The $KOPI community runs 24/7 — just like a cat that wakes you up at 3 AM.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               {[
@@ -345,12 +353,16 @@ function Index() {
             <button onClick={copy} className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground hover:bg-primary hover:text-primary-foreground">
               {copied ? "Copied!" : "Copy"}
             </button>
+            <a className="hover:text-primary" href={PUMPFUN} target="_blank" rel="noopener noreferrer">
+              pump.fun ↗
+            </a>
           </div>
           <p>
-            Disclaimer: $KOPI adalah meme coin tanpa utilitas dan tanpa janji keuntungan finansial.
-            Crypto sangat berisiko — DYOR dan jangan pakai uang dapur. Audit & LP burn proof tersedia di Solscan.
+            Disclaimer: $KOPI is a meme coin with no utility and no promise of financial return.
+            Crypto is highly risky — DYOR and never invest more than you can afford to lose.
+            LP burn and mint revoke proofs are verifiable on Solscan.
           </p>
-          <p>© {new Date().getFullYear()} $KOPI. Dibuat oleh komunitas, untuk kucing.</p>
+          <p>© {new Date().getFullYear()} $KOPI. Built by the community, for the cat.</p>
         </div>
       </footer>
     </div>
