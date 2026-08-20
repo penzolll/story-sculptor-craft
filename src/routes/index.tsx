@@ -349,7 +349,7 @@ function Index() {
         <section id="memes" className="border-b border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
             <h2 className="text-3xl sm:text-4xl">Meme Gallery</h2>
-            <p className="mt-3 text-muted-foreground">Made by the community. Drop yours in Telegram.</p>
+            <p className="mt-3 text-muted-foreground">Made by the community. Drop yours on X.</p>
             <div className="mt-8 grid gap-5 sm:grid-cols-3">
               {[
                 [meme1, "$KOPI cat riding a rocket to the moon"],
@@ -378,21 +378,14 @@ function Index() {
               The $KOPI community runs 24/7 — just like a cat that wakes you up at 3 AM.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {[
-                ["Telegram", "https://t.me/"],
-                ["X (Twitter)", "https://x.com/"],
-                ["Discord", "https://discord.com/"],
-              ].map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full border-2 border-border bg-card px-7 py-3 font-display transition-colors hover:border-primary hover:text-primary"
-                >
-                  {label}
-                </a>
-              ))}
+              <a
+                href="https://x.com/KOPI_CAT_20H"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border-2 border-border bg-card px-7 py-3 font-display transition-colors hover:border-primary hover:text-primary"
+              >
+                X (Twitter)
+              </a>
             </div>
           </div>
         </section>
