@@ -1,12 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import mascot from "@/assets/mascot.png";
 import meme1 from "@/assets/meme-1.jpg";
 import meme2 from "@/assets/meme-2.jpg";
 import meme3 from "@/assets/meme-3.jpg";
+import { CONTRACT_ADDRESS, getTokenStats, type TokenStats } from "@/lib/token.functions";
 
-const CA = "FPKEgcHacDeKmreMHYAEQN5cdSwwgp3fLdnnTgfGpump";
+const CA = CONTRACT_ADDRESS;
 const PUMPFUN = `https://pump.fun/coin/${CA}`;
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -35,42 +39,54 @@ const nav = [
   ["memes", "Memes"],
 ];
 
-const alloc = [
-  { label: "Liquidity Pool (burned)", value: 60, color: "oklch(0.78 0.19 62)" },
-  { label: "Community & Airdrop", value: 20, color: "oklch(0.72 0.16 145)" },
-  { label: "Marketing / CEX", value: 12, color: "oklch(0.68 0.15 25)" },
-  { label: "Dev (6-month vest)", value: 8, color: "oklch(0.6 0.05 60)" },
-];
+const COLORS = {
+  circulating: "oklch(0.78 0.19 62)",
+  curve: "oklch(0.6 0.05 60)",
+};
 
-function Pie() {
-  let start = 0;
-  const stops = alloc
-    .map((a) => {
-      const end = start + a.value;
-      const s = `${a.color} ${start}% ${end}%`;
-      start = end;
-      return s;
-    })
-    .join(", ");
+const compact = (n: number | null | undefined, prefix = "") =>
+  n == null ? "—" : prefix + new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(n);
+
+const usd = (n: number | null | undefined) =>
+  n == null
+    ? "—"
+    : n < 0.01
+      ? `$${n.toPrecision(3)}`
+      : `$${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n)}`;
+
+function Pie({ stats }: { stats?: TokenStats | undefined }) {
+  const total = stats?.totalSupply ?? 0;
+  const inCurve = stats?.inCurve ?? null;
+  const circPct = total && inCurve != null ? ((total - inCurve) / total) * 100 : 100;
+  const stops = `${COLORS.circulating} 0% ${circPct}%, ${COLORS.curve} ${circPct}% 100%`;
   return (
     <div
       className="mx-auto aspect-square w-56 rounded-full border-2 border-border sm:w-72"
       style={{ backgroundImage: `conic-gradient(${stops})` }}
       role="img"
-      aria-label="KOPI token allocation chart"
+      aria-label="Live token supply distribution chart"
     >
       <div className="flex h-full w-full items-center justify-center">
         <div className="flex h-1/2 w-1/2 flex-col items-center justify-center rounded-full bg-background text-center">
-          <span className="font-display text-lg text-primary">1B</span>
-          <span className="text-[10px] text-muted-foreground">supply</span>
+          <span className="font-display text-lg text-primary">{compact(stats?.totalSupply)}</span>
+          <span className="text-[10px] text-muted-foreground">total supply</span>
         </div>
       </div>
     </div>
   );
 }
 
+
 function Index() {
   const [copied, setCopied] = useState(false);
+  const fetchStats = useServerFn(getTokenStats);
+  const { data: stats, isLoading } = useQuery({
+    queryKey: ["token-stats", CA],
+    queryFn: () => fetchStats(),
+    refetchInterval: 60_000,
+    staleTime: 30_000,
+  });
+
 
   const copy = async () => {
     await navigator.clipboard.writeText(CA);
@@ -211,32 +227,69 @@ function Index() {
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-20">
             <div>
               <h2 className="text-3xl sm:text-4xl">Tokenomics</h2>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Live on-chain data for{" "}
+                <code className="text-primary">
+                  {CA.slice(0, 4)}…{CA.slice(-4)}
+                </code>
+                {stats ? ` · ${stats.name} ($${stats.symbol})` : isLoading ? " · loading…" : ""}
+              </p>
               <dl className="mt-6 grid grid-cols-2 gap-4">
                 {[
-                  ["Total Supply", "1,000,000,000"],
-                  ["Buy / Sell Tax", "0% / 0%"],
+                  ["Total Supply", compact(stats?.totalSupply)],
+                  ["Price", usd(stats?.priceUsd)],
+                  ["Market Cap", compact(stats?.marketCapUsd, "$")],
+                  ["24h Volume", compact(stats?.volume24hUsd, "$")],
+                  ["Liquidity", compact(stats?.liquidityUsd, "$")],
+                  [
+                    "24h Change",
+                    stats?.priceChange24h != null ? `${stats.priceChange24h > 0 ? "+" : ""}${stats.priceChange24h}%` : "—",
+                  ],
                   ["Network", "Solana (SPL)"],
-                  ["Mint Authority", "Revoked"],
+                  ["Buy / Sell Tax", "0% / 0%"],
                 ].map(([k, v]) => (
                   <div key={k} className="pop-card p-4">
                     <dt className="text-xs uppercase tracking-widest text-muted-foreground">{k}</dt>
-                    <dd className="mt-1 font-display text-lg text-primary">{v}</dd>
+                    <dd className="mt-1 font-display text-lg text-primary">{isLoading ? "…" : v}</dd>
                   </div>
                 ))}
               </dl>
+
+              <div className="pop-card mt-6 p-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Bonding curve progress</span>
+                  <span className="font-display text-primary">
+                    {stats?.complete ? "Bonded ✓" : stats?.bondingProgress != null ? `${stats.bondingProgress.toFixed(1)}%` : "—"}
+                  </span>
+                </div>
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary">
+                  <div
+                    className="h-full rounded-full bg-primary transition-all"
+                    style={{ width: `${stats?.complete ? 100 : (stats?.bondingProgress ?? 0)}%` }}
+                  />
+                </div>
+              </div>
+
               <ul className="mt-6 space-y-3">
-                {alloc.map((a) => (
-                  <li key={a.label} className="flex items-center gap-3 text-sm">
-                    <span className="h-4 w-4 rounded-sm" style={{ backgroundColor: a.color }} aria-hidden />
-                    <span className="flex-1 text-muted-foreground">{a.label}</span>
-                    <span className="font-display">{a.value}%</span>
+                {[
+                  ["Circulating / traded", COLORS.circulating, stats?.circulating],
+                  ["Still in bonding curve", COLORS.curve, stats?.inCurve],
+                ].map(([label, color, value]) => (
+                  <li key={label as string} className="flex items-center gap-3 text-sm">
+                    <span className="h-4 w-4 rounded-sm" style={{ backgroundColor: color as string }} aria-hidden />
+                    <span className="flex-1 text-muted-foreground">{label as string}</span>
+                    <span className="font-display">{compact(value as number | null)}</span>
                   </li>
                 ))}
               </ul>
+              <p className="mt-4 text-xs text-muted-foreground">
+                Data pulled live from pump.fun and DexScreener. Always verify on-chain before buying.
+              </p>
             </div>
-            <Pie />
+            <Pie stats={stats} />
           </div>
         </section>
+
 
         {/* HOW TO BUY */}
         <section id="how-to-buy" className="border-b border-border">
