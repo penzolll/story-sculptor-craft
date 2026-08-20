@@ -39,39 +39,43 @@ const nav = [
   ["memes", "Memes"],
 ];
 
-const alloc = [
-  { label: "Liquidity Pool (burned)", value: 60, color: "oklch(0.78 0.19 62)" },
-  { label: "Community & Airdrop", value: 20, color: "oklch(0.72 0.16 145)" },
-  { label: "Marketing / CEX", value: 12, color: "oklch(0.68 0.15 25)" },
-  { label: "Dev (6-month vest)", value: 8, color: "oklch(0.6 0.05 60)" },
-];
+const COLORS = {
+  circulating: "oklch(0.78 0.19 62)",
+  curve: "oklch(0.6 0.05 60)",
+};
 
-function Pie() {
-  let start = 0;
-  const stops = alloc
-    .map((a) => {
-      const end = start + a.value;
-      const s = `${a.color} ${start}% ${end}%`;
-      start = end;
-      return s;
-    })
-    .join(", ");
+const compact = (n: number | null | undefined, prefix = "") =>
+  n == null ? "—" : prefix + new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(n);
+
+const usd = (n: number | null | undefined) =>
+  n == null
+    ? "—"
+    : n < 0.01
+      ? `$${n.toPrecision(3)}`
+      : `$${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n)}`;
+
+function Pie({ stats }: { stats?: TokenStats }) {
+  const total = stats?.totalSupply ?? 0;
+  const inCurve = stats?.inCurve ?? null;
+  const circPct = total && inCurve != null ? ((total - inCurve) / total) * 100 : 100;
+  const stops = `${COLORS.circulating} 0% ${circPct}%, ${COLORS.curve} ${circPct}% 100%`;
   return (
     <div
       className="mx-auto aspect-square w-56 rounded-full border-2 border-border sm:w-72"
       style={{ backgroundImage: `conic-gradient(${stops})` }}
       role="img"
-      aria-label="KOPI token allocation chart"
+      aria-label="Live token supply distribution chart"
     >
       <div className="flex h-full w-full items-center justify-center">
         <div className="flex h-1/2 w-1/2 flex-col items-center justify-center rounded-full bg-background text-center">
-          <span className="font-display text-lg text-primary">1B</span>
-          <span className="text-[10px] text-muted-foreground">supply</span>
+          <span className="font-display text-lg text-primary">{compact(stats?.totalSupply)}</span>
+          <span className="text-[10px] text-muted-foreground">total supply</span>
         </div>
       </div>
     </div>
   );
 }
+
 
 function Index() {
   const [copied, setCopied] = useState(false);
