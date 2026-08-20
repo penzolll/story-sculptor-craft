@@ -219,32 +219,69 @@ function Index() {
           <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:grid-cols-2 md:py-20">
             <div>
               <h2 className="text-3xl sm:text-4xl">Tokenomics</h2>
+              <p className="mt-3 text-sm text-muted-foreground">
+                Live on-chain data for{" "}
+                <code className="text-primary">
+                  {CA.slice(0, 4)}…{CA.slice(-4)}
+                </code>
+                {stats ? ` · ${stats.name} ($${stats.symbol})` : isLoading ? " · loading…" : ""}
+              </p>
               <dl className="mt-6 grid grid-cols-2 gap-4">
                 {[
-                  ["Total Supply", "1,000,000,000"],
-                  ["Buy / Sell Tax", "0% / 0%"],
+                  ["Total Supply", compact(stats?.totalSupply)],
+                  ["Price", usd(stats?.priceUsd)],
+                  ["Market Cap", compact(stats?.marketCapUsd, "$")],
+                  ["24h Volume", compact(stats?.volume24hUsd, "$")],
+                  ["Liquidity", compact(stats?.liquidityUsd, "$")],
+                  [
+                    "24h Change",
+                    stats?.priceChange24h != null ? `${stats.priceChange24h > 0 ? "+" : ""}${stats.priceChange24h}%` : "—",
+                  ],
                   ["Network", "Solana (SPL)"],
-                  ["Mint Authority", "Revoked"],
+                  ["Buy / Sell Tax", "0% / 0%"],
                 ].map(([k, v]) => (
                   <div key={k} className="pop-card p-4">
                     <dt className="text-xs uppercase tracking-widest text-muted-foreground">{k}</dt>
-                    <dd className="mt-1 font-display text-lg text-primary">{v}</dd>
+                    <dd className="mt-1 font-display text-lg text-primary">{isLoading ? "…" : v}</dd>
                   </div>
                 ))}
               </dl>
+
+              <div className="pop-card mt-6 p-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Bonding curve progress</span>
+                  <span className="font-display text-primary">
+                    {stats?.complete ? "Bonded ✓" : stats?.bondingProgress != null ? `${stats.bondingProgress.toFixed(1)}%` : "—"}
+                  </span>
+                </div>
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary">
+                  <div
+                    className="h-full rounded-full bg-primary transition-all"
+                    style={{ width: `${stats?.complete ? 100 : (stats?.bondingProgress ?? 0)}%` }}
+                  />
+                </div>
+              </div>
+
               <ul className="mt-6 space-y-3">
-                {alloc.map((a) => (
-                  <li key={a.label} className="flex items-center gap-3 text-sm">
-                    <span className="h-4 w-4 rounded-sm" style={{ backgroundColor: a.color }} aria-hidden />
-                    <span className="flex-1 text-muted-foreground">{a.label}</span>
-                    <span className="font-display">{a.value}%</span>
+                {[
+                  ["Circulating / traded", COLORS.circulating, stats?.circulating],
+                  ["Still in bonding curve", COLORS.curve, stats?.inCurve],
+                ].map(([label, color, value]) => (
+                  <li key={label as string} className="flex items-center gap-3 text-sm">
+                    <span className="h-4 w-4 rounded-sm" style={{ backgroundColor: color as string }} aria-hidden />
+                    <span className="flex-1 text-muted-foreground">{label as string}</span>
+                    <span className="font-display">{compact(value as number | null)}</span>
                   </li>
                 ))}
               </ul>
+              <p className="mt-4 text-xs text-muted-foreground">
+                Data pulled live from pump.fun and DexScreener. Always verify on-chain before buying.
+              </p>
             </div>
-            <Pie />
+            <Pie stats={stats} />
           </div>
         </section>
+
 
         {/* HOW TO BUY */}
         <section id="how-to-buy" className="border-b border-border">
