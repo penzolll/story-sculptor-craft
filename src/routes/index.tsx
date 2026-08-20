@@ -378,21 +378,14 @@ function Index() {
               The $KOPI community runs 24/7 — just like a cat that wakes you up at 3 AM.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
-              {[
-                ["Telegram", "https://t.me/"],
-                ["X (Twitter)", "https://x.com/"],
-                ["Discord", "https://discord.com/"],
-              ].map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full border-2 border-border bg-card px-7 py-3 font-display transition-colors hover:border-primary hover:text-primary"
-                >
-                  {label}
-                </a>
-              ))}
+              <a
+                href="https://x.com/KOPI_CAT_20H"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border-2 border-border bg-card px-7 py-3 font-display transition-colors hover:border-primary hover:text-primary"
+              >
+                X (Twitter)
+              </a>
             </div>
           </div>
         </section>
