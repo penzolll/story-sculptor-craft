@@ -54,7 +54,7 @@ const usd = (n: number | null | undefined) =>
       ? `$${n.toPrecision(3)}`
       : `$${new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 }).format(n)}`;
 
-function Pie({ stats }: { stats?: TokenStats }) {
+function Pie({ stats }: { stats?: TokenStats | undefined }) {
   const total = stats?.totalSupply ?? 0;
   const inCurve = stats?.inCurve ?? null;
   const circPct = total && inCurve != null ? ((total - inCurve) / total) * 100 : 100;
