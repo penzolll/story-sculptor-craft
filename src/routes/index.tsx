@@ -79,6 +79,14 @@ function Pie({ stats }: { stats?: TokenStats }) {
 
 function Index() {
   const [copied, setCopied] = useState(false);
+  const fetchStats = useServerFn(getTokenStats);
+  const { data: stats, isLoading } = useQuery({
+    queryKey: ["token-stats", CA],
+    queryFn: () => fetchStats(),
+    refetchInterval: 60_000,
+    staleTime: 30_000,
+  });
+
 
   const copy = async () => {
     await navigator.clipboard.writeText(CA);
