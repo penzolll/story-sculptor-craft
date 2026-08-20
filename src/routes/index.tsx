@@ -349,7 +349,7 @@ function Index() {
         <section id="memes" className="border-b border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
             <h2 className="text-3xl sm:text-4xl">Meme Gallery</h2>
-            <p className="mt-3 text-muted-foreground">Made by the community. Drop yours in Telegram.</p>
+            <p className="mt-3 text-muted-foreground">Made by the community. Drop yours on X.</p>
             <div className="mt-8 grid gap-5 sm:grid-cols-3">
               {[
                 [meme1, "$KOPI cat riding a rocket to the moon"],
