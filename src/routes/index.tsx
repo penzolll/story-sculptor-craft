@@ -415,7 +415,16 @@ function Index() {
               >
                 X (Twitter)
               </a>
+              <a
+                href={TELEGRAM_STICKERS}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border-2 border-border bg-card px-7 py-3 font-display transition-colors hover:border-primary hover:text-primary"
+              >
+                Telegram Stickers
+              </a>
             </div>
+
           </div>
         </section>
       </main>
