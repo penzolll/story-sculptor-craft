@@ -3,13 +3,35 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import mascot from "@/assets/mascot.png";
-import meme1 from "@/assets/meme-1.jpg";
-import meme2 from "@/assets/meme-2.jpg";
-import meme3 from "@/assets/meme-3.jpg";
+import sticker1 from "@/assets/sticker-1.png";
+import sticker2 from "@/assets/sticker-2.png";
+import sticker3 from "@/assets/sticker-3.png";
+import sticker4 from "@/assets/sticker-4.png";
+import sticker5 from "@/assets/sticker-5.png";
+import sticker6 from "@/assets/sticker-6.png";
+import sticker7 from "@/assets/sticker-7.png";
+import sticker8 from "@/assets/sticker-8.png";
+import sticker9 from "@/assets/sticker-9.png";
+import sticker10 from "@/assets/sticker-10.png";
 import { CONTRACT_ADDRESS, getTokenStats, type TokenStats } from "@/lib/token.functions";
 
 const CA = CONTRACT_ADDRESS;
 const PUMPFUN = `https://pump.fun/coin/${CA}`;
+const TELEGRAM_STICKERS = "https://t.me/addstickers/KopiCat";
+
+const STICKERS: [string, string][] = [
+  [sticker1, "$KOPI cat riding a rocket with coffee"],
+  [sticker2, "$KOPI cat holding a green candle"],
+  [sticker3, "$KOPI cat sleeping on a coffee cup"],
+  [sticker4, "$KOPI cat crying over spilled coffee"],
+  [sticker5, "$KOPI cat as a barista with a latte"],
+  [sticker6, "$KOPI cat thumbs up next to a green arrow"],
+  [sticker7, "$KOPI cat shocked at the chart"],
+  [sticker8, "$KOPI cat king on a pile of gold coins"],
+  [sticker9, "$KOPI cat coding at night with coffee"],
+  [sticker10, "$KOPI cat blowing a heart kiss"],
+];
+
 
 
 export const Route = createFileRoute("/")({
