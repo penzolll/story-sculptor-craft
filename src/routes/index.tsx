@@ -17,7 +17,7 @@ import { CONTRACT_ADDRESS, getTokenStats, type TokenStats } from "@/lib/token.fu
 
 const CA = CONTRACT_ADDRESS;
 const PUMPFUN = `https://pump.fun/coin/${CA}`;
-const TELEGRAM_STICKERS = "https://t.me/addstickers/KopiCat";
+const TELEGRAM_STICKERS = "https://t.me/addstickers/KOPICAT20H";
 
 const STICKERS: [string, string][] = [
   [sticker1, "$KOPI cat riding a rocket with coffee"],
