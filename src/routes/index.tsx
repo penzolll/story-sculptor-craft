@@ -371,13 +371,19 @@ function Index() {
         <section id="memes" className="border-b border-border">
           <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
             <h2 className="text-3xl sm:text-4xl">Meme Gallery</h2>
-            <p className="mt-3 text-muted-foreground">Made by the community. Drop yours on X.</p>
-            <div className="mt-8 grid gap-5 sm:grid-cols-3">
-              {[
-                [meme1, "$KOPI cat riding a rocket to the moon"],
-                [meme2, "$KOPI cat staring at a green chart"],
-                [meme3, "$KOPI cat sleeping on a coffee cup"],
-              ].map(([src, alt]) => (
+            <p className="mt-3 text-muted-foreground">
+              10 $KOPI stickers, ready for Telegram. Grab the pack and spam every chat.
+            </p>
+            <a
+              href={TELEGRAM_STICKERS}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glow mt-6 inline-block rounded-full bg-primary px-7 py-3 font-display text-primary-foreground transition-transform hover:scale-105"
+            >
+              Add Telegram Sticker Pack
+            </a>
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+              {STICKERS.map(([src, alt]) => (
                 <img
                   key={alt}
                   src={src}
@@ -385,12 +391,13 @@ function Index() {
                   loading="lazy"
                   width={768}
                   height={768}
-                  className="pop-card w-full object-cover transition-transform hover:-rotate-2 hover:scale-105"
+                  className="pop-card w-full bg-card/50 p-2 transition-transform hover:-rotate-2 hover:scale-105"
                 />
               ))}
             </div>
           </div>
         </section>
+
 
         {/* COMMUNITY */}
         <section id="community" className="hero-bg">
